@@ -20,8 +20,11 @@ def parse_arguments():
     return parser.parse_args()
 
 def main():
+    gyver = ch.MacGyver(14, 0)
     mapping = mp.Map()
     mapping.create_map("mapping.txt")
+    mapping.move_character(gyver.y,gyver.x)
+    mapping.show_map()
 
 if __name__ == "__main__":
     main()
