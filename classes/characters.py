@@ -19,7 +19,8 @@ class MacGyver:
         elif(direction == 'top'):
             self.y -= 1
         else:
-            raise Warning('Incorrect direction, please use : left, right, bottom or top')
+            print('Incorrect direction, please use : left, right, bottom or top')
+        return self.y
 
         
 

@@ -5,14 +5,22 @@ import numpy as np
 class Map:
 
     MAP_SIZE = 15
-
+    
     #check if the destination is available
     def is_path_available(self, y, x):
-        return True if self.map(y, x) == '0' else False
+        if(y >= 0 and y < 15 and x >= 0 and x < 15):
+            return True if self.map[y][x] == '0' else False
+        else:
+            return False
 
     #replaces the available by our lord and savior MacGyver
     def set_character(self, y, x):
-        self.map(y, x) = 'G'
+        self.map[y][x] = 'G'
+        return self.map
+
+    def move_character(self, old_y, old_x, y, x):
+        self.map[old_y][old_x] = '0'
+        self.map[y][x] = 'G'
         return self.map
 
     #create the labyrinth from a txt file
