@@ -27,7 +27,7 @@ class MacGyver:
 
 class Guardian:
 
-    def __init__(self, x, y):
+    def __init__(self, y, x):
         self.asleep = False
         self.x = x
         self.y = y
