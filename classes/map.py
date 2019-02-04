@@ -6,6 +6,15 @@ class Map:
     """Hello"""
     MAP_SIZE = 15
 
+    def list_every_path(self):
+        """make an array of every available location"""
+        available = []
+        for y, line in enumarate(self.map):
+            for x,  tile in line:
+                if tile == '0':
+                    available.append([y, x])
+        return available
+
     def is_path_available(self, y_pos, x_pos):
         """ Check if the destination is available """
         if(15 > y_pos >= 0 and 0 <= x_pos < 15):
