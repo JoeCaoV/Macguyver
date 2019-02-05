@@ -1,13 +1,11 @@
 class MacGyver:
 
-    def __init__(self, y, x):
+    def __init__(self, y, x, mapping):
         self.alive = True
         self.x = x
         self.y = y
         self.bag = 0
-        self.got_needle = False
-        self.got_tube = False
-        self.got_syringe = False
+        mapping.set_character(y,x)
 
     def moving(self,direction):
         if(direction == 'left'):
@@ -27,7 +25,8 @@ class MacGyver:
 
 class Guardian:
 
-    def __init__(self, y, x):
+    def __init__(self, y, x, mapping):
         self.asleep = False
         self.x = x
         self.y = y
+        mapping.set_bad_guy(y, x)

@@ -1,17 +1,22 @@
 import random
 
-class Items():
+class Item():
 
-	def __init__(self, name, img, mapping):
+    def __init__(self, name, img, mapping):
         self.name = name
         self.img = img
-        self._set_position(mapping)
+        self.set_position(mapping)
         
-    def _set_position(self, mapping):
-    	available = mapping.list_every_path()
-    	rand_ind = random.randomint(0, len(available)) -1
-    	self.y = available[rand_int][0]
-    	self.x = available[rand_int][1]
+    def set_position(self, mapping):
+        rand_y = random.randint(0, 15) -1
+        rand_x = random.randint(0, 15) -1
+        if mapping.is_path_available(rand_y, rand_x):
+            self.y = rand_y
+            self.x = rand_x
+            mapping.set_item(rand_y, rand_x)
+
+        else:
+            return self.set_position(mapping)
 
 
 
