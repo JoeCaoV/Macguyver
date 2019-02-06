@@ -6,6 +6,7 @@ class Item():
         self.name = name
         self.img = img
         self.set_position(mapping)
+        self.looted = False
         
     def set_position(self, mapping):
         rand_y = random.randint(0, 15) -1

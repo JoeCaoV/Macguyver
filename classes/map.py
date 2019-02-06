@@ -7,19 +7,10 @@ class Map:
     def __init__(self, mapping):
         self.create_map(mapping)
 
-    def list_every_path(self):
-        """make an array of every available location"""
-        available = []
-        for y, line in enumarate(self.map):
-            for x,  tile in line:
-                if tile == ' ':
-                    available.append([y, x])
-        return available
-
     def is_path_available(self, y_pos, x_pos):
         """ Check if the destination is available """
         if(15 > y_pos >= 0 and 0 <= x_pos < 15):
-            return True if self.map[y_pos][x_pos] == ' ' else False
+            return True if self.map[y_pos][x_pos] in [' ', 'G', 'X', 'W'] else False
 
     def set_character(self, y_pos, x_pos):
         """place the hero into the labyrinth"""
