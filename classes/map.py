@@ -12,6 +12,11 @@ class Map:
         if(15 > y_pos >= 0 and 0 <= x_pos < 15):
             return True if self.map[y_pos][x_pos] in [' ', 'G', 'X', 'W'] else False
 
+    def is_tile_empty(self, y_pos, x_pos):
+        """ Check if the tile is empty """
+        if(15 > y_pos >= 0 and 0 <= x_pos < 15):
+            return True if self.map[y_pos][x_pos] == ' ' else False
+
     def set_character(self, y_pos, x_pos):
         """place the hero into the labyrinth"""
         self.map[y_pos][x_pos] = 'G'
