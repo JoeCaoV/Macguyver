@@ -1,13 +1,18 @@
 import random
+import os
+import pygame.image
 
 class Item():
 
     def __init__(self, name, img, mapping):
         self.name = name
-        self.img = img
+        self.img_name = img
         self.set_position(mapping)
         self.looted = False
-        
+        self.dir = os.path.dirname(os.path.dirname(__file__))
+        self.img = os.path.join(self.dir, "ressource", "image", self.img_name)
+        self.pygame_img = pygame.image.load(self.img)
+
     def set_position(self, mapping):
         rand_y = random.randint(0, 15) -1
         rand_x = random.randint(0, 15) -1
