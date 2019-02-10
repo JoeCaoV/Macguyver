@@ -98,10 +98,10 @@ def _loot_item(gyver, items):
     """
     for item in items:
         if gyver.x == item.x and gyver.y == item.y and item.looted is False:
-            display_info('You collected the {}'.format(item.name))
-            display_bag(gyver)
             gyver.bag += 1
             item.looted = True
+            display_info('You collected the {}'.format(item.name))
+            display_bag(gyver)
             return item
     return None
 
