@@ -9,6 +9,7 @@ import classes.map as mp
 import classes.items as itm
 
 pygame.init()
+pygame.display.set_caption("MacGyver's Challenger")
 
 WINDOW = pygame.display.set_mode((600, 650))
 TILE_SIZE = 40
