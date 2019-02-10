@@ -90,8 +90,7 @@ def _check_encounter(gyver, bad_guy):
         pygame.display.flip()
         pygame.time.wait(3000)
         return True
-    else:
-        return False
+    return None
 
 def _loot_item(gyver, items):
     """check if MacGyver meet an uncollected item,
@@ -99,12 +98,15 @@ def _loot_item(gyver, items):
     """
     for item in items:
         if gyver.x == item.x and gyver.y == item.y and item.looted is False:
-            print("you collected the {}".format(item.name))
+            display_info('You collected the {}'.format(item.name))
+            display_bag(gyver)
             gyver.bag += 1
             item.looted = True
             return item
+    return None
 
 def display_info(message):
+    """This function display the message given on the bottom left corner"""
     WINDOW.fill((0, 0, 0), BOT_LEFT)
     info_message = message
     info_render = FONT.render(info_message, True, (255, 255, 255))
@@ -112,7 +114,8 @@ def display_info(message):
     pygame.display.update(BOT_LEFT)
 
 def display_bag(gyver):
-    WINDOW.fill ((0, 0, 0), BOT_RIGHT)
+    """This function display the number of collected item on the bottom right corner"""
+    WINDOW.fill((0, 0, 0), BOT_RIGHT)
     bag_message = 'You collected {}/3 items'.format(gyver.bag)
     bag_render = FONT.render(bag_message, True, (255, 255, 255))
     WINDOW.blit(bag_render, BOT_RIGHT)
@@ -149,10 +152,7 @@ def _start_game(mapping, gyver, bad_guy, items):
                 if(old_y != gyver.y or old_x != gyver.x):
                     if mapping.is_path_available(gyver.y, gyver.x):
                         mapping.move_character(old_y, old_x, gyver.y, gyver.x)
-                        item = _loot_item(gyver, items)
-                        if item:
-                            display_bag(gyver)
-                            display_info('You collected the {}'.format(item.name))
+                        _loot_item(gyver, items)
                         WINDOW.blit(gyver.pygame_img, (gyver.x * TILE_SIZE, gyver.y * TILE_SIZE))
                         WINDOW.blit(FLOOR, (old_x * TILE_SIZE, old_y * TILE_SIZE))
                         pygame.display.update()
