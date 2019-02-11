@@ -52,7 +52,6 @@ def main():
     Once it's done, starting the game.
     """
 
-
     mapping = mp.Map("mapping.txt")
 
     #Setting the characters
