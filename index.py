@@ -32,7 +32,7 @@ def main():
     gyver = ch.MacGyver(14, 0, mapping)
 
     title ="MacGyver's Labyrinth"
-    display = dp.Display(650, 600, title)
+    display = dp.Display(600, 650, title)
 
     #Setting the items
     tube = itm.Item('tube', 'tube.png', mapping)
