@@ -9,8 +9,9 @@ class Item():
         self.img_name = img
         self.set_position(mapping)
         self.looted = False
-        self.dir = os.path.dirname(os.path.dirname(__file__))
-        self.img = os.path.join(self.dir, "ressource", "image", self.img_name)
+        self.root = os.path.dirname(os.path.dirname(__file__))
+        self.path_img = self.root + ("/ressource/image/") 
+        self.img = os.path.join(self.path_img, self.img_name)
         self.pygame_img = pygame.image.load(self.img)
 
     def set_position(self, mapping):
