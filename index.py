@@ -60,21 +60,6 @@ def _check_encounter(gyver, bad_guy, display):
         return True
     return None
 
-
-def _loot_item(gyver, items, display):
-    """check if MacGyver meet an uncollected item,
-    if he does, add it to the bag and mark the item as looted
-    """
-    for item in items:
-        if gyver.x == item.x and gyver.y == item.y and item.looted is False:
-            gyver.bag += 1
-            item.looted = True
-            display.show_info('You collected the {}'.format(item.name))
-            display.show_bag(gyver)
-            return item
-    return None
-
-
 def _start_game(mapping, gyver, bad_guy, items, display):
     """Once the elements of the game are set by set_game(),
     this function will loop an input asking direction
@@ -87,6 +72,8 @@ def _start_game(mapping, gyver, bad_guy, items, display):
     game_over = False
     while not game_over:
         for event in pygame.event.get():
+            old_y = gyver.y
+            old_x = gyver.x
             if event.type == QUIT:
                 game_over = True
             elif event.type == KEYDOWN:
@@ -99,7 +86,8 @@ def _start_game(mapping, gyver, bad_guy, items, display):
                 elif event.key == K_LEFT:
                     gyver.moving('left')
 
-                display.move_character(mapping, gyver, bad_guy, items)
+                display.move_character(mapping, gyver, bad_guy, items, old_y, old_x)
+                game_over = _check_encounter(gyver, bad_guy, display)
 
 
 if __name__ == "__main__":
