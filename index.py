@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf-8
 import pygame
-#pylint: disable=W0614, W0401
-from pygame.locals import *
 import classes.characters as ch
 import classes.display as dp
 import classes.map as mp
@@ -74,16 +72,16 @@ def _start_game(mapping, gyver, bad_guy, items, display):
         for event in pygame.event.get():
             old_y = gyver.y
             old_x = gyver.x
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 game_over = True
-            elif event.type == KEYDOWN:
-                if event.key == K_UP:
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
                     gyver.moving('top')
-                elif event.key == K_DOWN:
+                elif event.key == pygame.K_DOWN:
                     gyver.moving('bottom')
-                elif event.key == K_RIGHT:
+                elif event.key == pygame.K_RIGHT:
                     gyver.moving('right')
-                elif event.key == K_LEFT:
+                elif event.key == pygame.K_LEFT:
                     gyver.moving('left')
 
                 display.move_character(mapping, gyver, bad_guy, items, old_y, old_x)
