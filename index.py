@@ -84,7 +84,7 @@ def _start_game(mapping, gyver, bad_guy, items, display):
                 elif event.key == pygame.K_LEFT:
                     gyver.moving('left')
 
-                display.move_character(mapping, gyver, bad_guy, items, old_y, old_x)
+                display.move_character(mapping, gyver, items, old_y, old_x)
                 game_over = _check_encounter(gyver, bad_guy, display)
 
 
