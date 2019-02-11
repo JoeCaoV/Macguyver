@@ -29,7 +29,7 @@ def main():
     bad_guy = ch.Guardian(1, 14, "guardian.png", mapping)
     gyver = ch.MacGyver(14, 0, "macgyver.png", mapping)
 
-    title ="MacGyver's Labyrinth"
+    title = "MacGyver's Labyrinth"
     display = dp.Display(600, 650, title)
 
     #Setting the items

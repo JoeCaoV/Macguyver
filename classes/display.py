@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 class Display:
-    
+
     def game_over(self, message):
         self.window.fill((0, 0, 0))
         font = pygame.font.Font(None, 40)
@@ -75,7 +75,7 @@ class Display:
         pygame.display.update(self.bot_right)
 
 
-    def move_character(self, mapping, gyver, bad_guy, items, old_y, old_x):
+    def move_character(self, mapping, gyver, items, old_y, old_x):
         self.window.fill((0, 0, 0), self.bot_left)
         pygame.display.update(self.bot_left)
         if(old_y != gyver.y or old_x != gyver.x):
@@ -83,7 +83,8 @@ class Display:
                 mapping.move_character(old_y, old_x, gyver.y, gyver.x)
                 self._loot_item(gyver, items)
                 self.show_looted_items(items)
-                self.window.blit(gyver.pygame_img, (gyver.x * self.tile_size, gyver.y * self.tile_size))
+                self.window.blit(gyver.pygame_img,
+                                 (gyver.x * self.tile_size, gyver.y * self.tile_size))
                 self.window.blit(self.floor, (old_x * self.tile_size, old_y * self.tile_size))
                 pygame.display.update()
             else:

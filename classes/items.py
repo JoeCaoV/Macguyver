@@ -6,12 +6,10 @@ class Item():
 
     def __init__(self, name, img, mapping):
         self.name = name
-        self.img_name = img
         self.set_position(mapping)
         self.looted = False
         self.root = os.path.dirname(os.path.dirname(__file__))
-        self.path_img = self.root + ("/ressource/image/") 
-        self.img = os.path.join(self.path_img, self.img_name)
+        self.img = os.path.join(self.root, "ressource", "image", img)
         self.pygame_img = pygame.image.load(self.img)
 
     def set_position(self, mapping):
@@ -24,6 +22,3 @@ class Item():
 
         else:
             return self.set_position(mapping)
-
-
-
