@@ -1,13 +1,20 @@
+from config import *
 import pygame
 
 pygame.init()
 
 class Display:
+    """This class, contains every action that must output or modify the display
+    of the game window, like moving the character, remove items or show infos
+    """
+    def __init__(self, width, height, title):
+        self.window = pygame.display.set_mode((width, height))
+        pygame.display.set_caption(title)
 
     def game_over(self, message):
+    #When the game is over, display the end message and close the game
         self.window.fill((0, 0, 0))
-        font = pygame.font.Font(None, 40)
-        text = font.render(message, True, (255, 255, 255))
+        text = BIG_FONT.render(message, True, (255, 255, 255))
         rect = text.get_rect()
         rect.center = 300, 300
         self.window.blit(text, rect)
@@ -23,79 +30,79 @@ class Display:
                 gyver.bag += 1
                 item.looted = True
                 self.show_info('You collected the {}'.format(item.name))
-                self.window.blit(self.floor, (self.tile_size*item.x, self.tile_size*item.y))
+                self.window.blit(FLOOR, (TILE_SIZE*item.x, TILE_SIZE*item.y))
                 self.show_bag(gyver)
                 return item
         return None
 
     def set_map(self, mapping):
+        #display the floor and wall tiles
         for y, line in enumerate(mapping.map):
             for x, tile in enumerate(line):
                 if tile == '#':
-                    self.window.blit(self.wall, (x*self.tile_size, y*self.tile_size))
+                    self.window.blit(WALL, (x*TILE_SIZE, y*TILE_SIZE))
                 else:
-                    self.window.blit(self.floor, (x*self.tile_size, y*self.tile_size))
+                    self.window.blit(FLOOR, (x*TILE_SIZE, y*TILE_SIZE))
 
     def show_looted_items(self, items):
+        #display the items looted in bottom screen
         for x, item in enumerate(items):
             if item.looted:
-                self.window.blit(item.pygame_img, (300+self.tile_size*x, 605))
+                self.window.blit(item.pygame_img, (300+TILE_SIZE*x, 605))
         pygame.display.flip()
 
     def set_characters(self, gyver, bad_guy):
-        gyver_position = (gyver.x * self.tile_size, gyver.y * self.tile_size)
+        #display both characters
+        gyver_position = (gyver.x * TILE_SIZE, gyver.y * TILE_SIZE)
 
-        bad_guy_position = (bad_guy.x * self.tile_size, bad_guy.y * self.tile_size)
+        bad_guy_position = (bad_guy.x * TILE_SIZE, bad_guy.y * TILE_SIZE)
 
         self.window.blit(gyver.pygame_img, gyver_position)
         self.window.blit(bad_guy.pygame_img, bad_guy_position)
 
     def set_items(self, items):
+        #display the items on the map
         for item in items:
             image = item.pygame_img
-            self.window.blit(image, (item.x * self.tile_size, item.y * self.tile_size))
+            self.window.blit(image, (item.x * TILE_SIZE, item.y * TILE_SIZE))
 
     def show_info(self, message):
         """This function display the message given on the bottom left corner"""
-        self.window.fill((0, 0, 0), self.bot_left)
+        self.window.fill((0, 0, 0), BOT_LEFT)
         info_message = message
-        info_render = self.font.render(info_message, True, (255, 255, 255))
-        self.window.blit(info_render, self.bot_left)
-        pygame.display.update(self.bot_left)
+        info_render = FONT.render(info_message, True, (255, 255, 255))
+        self.window.blit(info_render, BOT_LEFT)
+        pygame.display.update(BOT_LEFT)
 
     def show_bag(self, gyver):
-        """This function display the number of collected item on the bottom right corner"""
-        self.window.fill((0, 0, 0), self.bot_right)
+        """This function display the number of collected 
+        item on the bottom right corner
+        """
+        self.window.fill((0, 0, 0), BOT_RIGHT)
         bag_message = 'You collected {}/3 items'.format(gyver.bag)
-        bag_render = self.font.render(bag_message, True, (255, 255, 255))
-        self.window.blit(bag_render, self.bot_right)
-        pygame.display.update(self.bot_right)
+        bag_render = FONT.render(bag_message, True, (255, 255, 255))
+        self.window.blit(bag_render, BOT_RIGHT)
+        pygame.display.update(BOT_RIGHT)
 
     def move_character(self, mapping, gyver, items, old_y, old_x):
-        self.window.fill((0, 0, 0), self.bot_left)
-        pygame.display.update(self.bot_left)
+        """move the character, to his new position, check if the position 
+        is available and return his old position if not and display the 
+        message "Invalid destination" else display the character on his 
+        new position and check if he meet item or guardian
+        """
+        self.window.fill((0, 0, 0), BOT_LEFT)
+        pygame.display.update(BOT_LEFT)
         if (mapping.is_path_available(gyver.y, gyver.x) and 
             (old_y != gyver.y or old_x != gyver.x)):
             mapping.move_character(old_y, old_x, gyver.y, gyver.x)
             self._loot_item(gyver, items)
             self.show_looted_items(items)
             self.window.blit(gyver.pygame_img,
-                             (gyver.x * self.tile_size, gyver.y * self.tile_size))
-            self.window.blit(self.floor, (old_x * self.tile_size, old_y * self.tile_size))
+                             (gyver.x * TILE_SIZE, gyver.y * TILE_SIZE))
+            self.window.blit(FLOOR, (old_x * TILE_SIZE, old_y * TILE_SIZE))
             pygame.display.update()
         else:
             gyver.y = old_y
             gyver.x = old_x
             message = 'Invalid Destination'
             self.show_info(message)
-
-    def __init__(self, width, height, title):
-        self.window = pygame.display.set_mode((width, height))
-        self.tile_size = 40
-        self.path = 'ressource/image/'
-        self.floor = pygame.image.load('{}floor.jpg'.format(self.path))
-        self.wall = pygame.image.load('{}wall.jpg'.format(self.path))
-        self.bot_left = pygame.Rect(15, 615, 250, 50)
-        self.bot_right = pygame.Rect(450, 615, 250, 50)
-        self.font = pygame.font.Font(None, 20)
-        pygame.display.set_caption(title)

@@ -1,7 +1,10 @@
 import os
 
 class Map:
-    """Hello"""
+    """Class to contain the map, ' ' is a road, '#' is a wall,
+    'G' is Gyver, 'X' is an item, 'W' is the guardian.
+    """
+    
     MAP_SIZE = 15
 
     def __init__(self, mapping):
