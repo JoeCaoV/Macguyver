@@ -27,7 +27,7 @@ class Display:
         """
         for item in items:
             if(gyver.x_pos == item.x_pos and gyver.y_pos == item.y_pos and
-                    item.looted is False):
+               item.looted is False):
                 gyver.bag += 1
                 item.looted = True
                 self.show_message('You collected the {}'.format(item.name), BOT_LEFT)
@@ -76,7 +76,7 @@ class Display:
         self.window.blit(text_render, rect)
         pygame.display.update(rect)
 
-    def move_character(self, mapping, gyver, items, old_y, old_x):
+    def move_character(self, mapping, gyver, items, old_pos):
         """move the character, to his new position, check if the position
         is available and return his old position if not and display the
         message "Invalid destination" else display the character on his
@@ -85,16 +85,17 @@ class Display:
         self.window.fill((0, 0, 0), BOT_LEFT)
         pygame.display.update(BOT_LEFT)
         if (mapping.is_path_available(gyver.y_pos, gyver.x_pos) and
-                (old_y != gyver.y_pos or old_x != gyver.x_pos)):
-            mapping.move_character(old_y, old_x, gyver.y_pos, gyver.x_pos)
+                (old_pos["y_pos"] != gyver.y_pos or old_pos["x_pos"] != gyver.x_pos)):
+            mapping.move_character(old_pos["y_pos"], old_pos["x_pos"],
+                                   gyver.y_pos, gyver.x_pos)
             self._loot_item(gyver, items)
             self.show_looted_items(items)
             self.window.blit(gyver.pygame_img,
                              (gyver.x_pos * TILE_SIZE, gyver.y_pos * TILE_SIZE))
-            self.window.blit(FLOOR, (old_x * TILE_SIZE, old_y * TILE_SIZE))
+            self.window.blit(FLOOR, (old_pos["x_pos"] * TILE_SIZE, old_pos["y_pos"] * TILE_SIZE))
             pygame.display.update()
         else:
-            gyver.y_pos = old_y
-            gyver.x_pos = old_x
+            gyver.y_pos = old_pos["y_pos"]
+            gyver.x_pos = old_pos["x_pos"]
             message = 'Invalid Destination'
             self.show_message(message, BOT_LEFT)

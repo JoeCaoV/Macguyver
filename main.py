@@ -66,8 +66,7 @@ class Main():
         game_over = False
         while not game_over:
             for event in pygame.event.get():
-                old_y = gyver.y_pos
-                old_x = gyver.x_pos
+                old_position = {"y_pos": gyver.y_pos, "x_pos": gyver.x_pos}
                 if event.type == pygame.QUIT:
                     game_over = True
                 elif event.type == pygame.KEYDOWN:
@@ -80,7 +79,7 @@ class Main():
                     elif event.key == pygame.K_LEFT:
                         gyver.moving('left')
 
-                    display.move_character(mapping, gyver, items, old_y, old_x)
+                    display.move_character(mapping, gyver, items, old_position)
                     game_over = self._check_encounter(gyver, bad_guy, display)
 
 
