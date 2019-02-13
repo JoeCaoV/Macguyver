@@ -30,9 +30,10 @@ class Display:
                     item.looted is False):
                 gyver.bag += 1
                 item.looted = True
-                self.show_info('You collected the {}'.format(item.name))
+                self.show_message('You collected the {}'.format(item.name), BOT_LEFT)
                 self.window.blit(FLOOR, (TILE_SIZE*item.x_pos, TILE_SIZE*item.y_pos))
-                self.show_bag(gyver)
+                bag_message = "You collected {}/3 items".format(gyver.bag)
+                self.show_message(bag_message, BOT_RIGHT)
                 return item
         return None
 
@@ -67,23 +68,13 @@ class Display:
             image = item.pygame_img
             self.window.blit(image, (item.x_pos * TILE_SIZE, item.y_pos * TILE_SIZE))
 
-    def show_info(self, message):
-        """This function display the message given on the bottom left corner"""
-        self.window.fill((0, 0, 0), BOT_LEFT)
-        info_message = message
-        info_render = FONT.render(info_message, True, (255, 255, 255))
-        self.window.blit(info_render, BOT_LEFT)
-        pygame.display.update(BOT_LEFT)
-
-    def show_bag(self, gyver):
-        """This function display the number of collected
-        item on the bottom right corner
-        """
-        self.window.fill((0, 0, 0), BOT_RIGHT)
-        bag_message = 'You collected {}/3 items'.format(gyver.bag)
-        bag_render = FONT.render(bag_message, True, (255, 255, 255))
-        self.window.blit(bag_render, BOT_RIGHT)
-        pygame.display.update(BOT_RIGHT)
+    def show_message(self, message, rect):
+        """Display the given message in the given rect"""
+        self.window.fill((0, 0, 0), rect)
+        text = message
+        text_render = FONT.render(text, True, (255, 255, 255))
+        self.window.blit(text_render, rect)
+        pygame.display.update(rect)
 
     def move_character(self, mapping, gyver, items, old_y, old_x):
         """move the character, to his new position, check if the position
@@ -106,4 +97,4 @@ class Display:
             gyver.y_pos = old_y
             gyver.x_pos = old_x
             message = 'Invalid Destination'
-            self.show_info(message)
+            self.show_message(message, BOT_LEFT)

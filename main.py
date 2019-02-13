@@ -6,6 +6,7 @@ from classes.display import Display
 from classes.map import Map
 from classes.items import Item
 from classes.gyver import MacGyver
+from config import BOT_LEFT, BOT_RIGHT
 
 class Main():
     """Class that will run the game using all the other ones"""
@@ -57,9 +58,10 @@ class Main():
         this function will loop an input asking direction
         until the game is over
         """
-        display.show_bag(gyver)
+        message = 'You collected 0/3 items'
+        display.show_message(message, BOT_RIGHT)
         message = 'Collect all items to defeat the guardian'
-        display.show_info(message)
+        display.show_message(message, BOT_LEFT)
 
         game_over = False
         while not game_over:
