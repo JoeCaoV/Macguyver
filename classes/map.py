@@ -4,10 +4,8 @@ class Map:
     """Class to contain the map, ' ' is a road, '#' is a wall,
     'G' is Gyver, 'X' is an item, 'W' is the guardian.
     """
-    
-    MAP_SIZE = 15
-
     def __init__(self, mapping):
+        #init the class by creating the map
         self.create_map(mapping)
 
     def is_path_available(self, y_pos, x_pos):

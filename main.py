@@ -8,43 +8,36 @@ from classes.items import Item
 from classes.gyver import MacGyver
 
 class Main():
+    """Class that will run the game using all the other ones"""
 
     def __init__(self):
         """function to set the game : creating the map, placing the items randomly,
         MacGyver and the Guardian's location must be specified (y, x).
         Once it's done, starting the game.
         """
+        #setting the pygame window
+        title = "MacGyver's Labyrinth"
+        display = Display(600, 650, title)
+
+        #Setting the map
         mapping = Map("mapping.txt")
+        display.set_map(mapping)
 
         #Setting the characters
         bad_guy = Character(1, 14, "guardian.png", mapping)
         gyver = MacGyver(14, 0, "macgyver.png", mapping)
-
-        title = "MacGyver's Labyrinth"
-        display = Display(600, 650, title)
+        display.set_characters(gyver, bad_guy)
 
         #Setting the items
         tube = Item('tube', 'tube.png', mapping)
         ether = Item('ether', 'ether.png', mapping)
         needle = Item('needle', 'needle.png', mapping)
         items = [tube, ether, needle]
-
-        self.create_labyrinth(mapping, gyver, bad_guy, items, display)
+        display.set_items(items)
 
         pygame.display.flip()
 
         self._start_game(mapping, gyver, bad_guy, items, display)
-
-    def create_labyrinth(self, mapping, gyver, bad_guy, items, display):
-       #create the labyrinth with pygame
-        #set the map with floor & walls
-        display.set_map(mapping)
-
-        #set the characters
-        display.set_characters(gyver, bad_guy)
-
-        #set the items
-        display.set_items(items)
 
     def _check_encounter(self, gyver, bad_guy, display):
         """check if MacGyver meets the Guardian,
@@ -90,4 +83,4 @@ class Main():
 
 
 if __name__ == "__main__":
-    main = Main()
+    MAIN = Main()
