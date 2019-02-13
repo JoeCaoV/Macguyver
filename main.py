@@ -43,7 +43,7 @@ class Main():
         """check if MacGyver meets the Guardian,
         if he does, check if all items have been collected,
         you win if they are, you lose otherwise"""
-        if(gyver.x == bad_guy.x and gyver.y == bad_guy.y):
+        if(gyver.x_pos == bad_guy.x_pos and gyver.y_pos == bad_guy.y_pos):
             if gyver.bag == 3:
                 end = "Congratulations, you won !"
             else:
@@ -64,8 +64,8 @@ class Main():
         game_over = False
         while not game_over:
             for event in pygame.event.get():
-                old_y = gyver.y
-                old_x = gyver.x
+                old_y = gyver.y_pos
+                old_x = gyver.x_pos
                 if event.type == pygame.QUIT:
                     game_over = True
                 elif event.type == pygame.KEYDOWN:

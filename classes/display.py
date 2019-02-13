@@ -26,7 +26,8 @@ class Display:
         if he does, add it to the bag and mark the item as looted
         """
         for item in items:
-            if gyver.x == item.x and gyver.y == item.y and item.looted is False:
+            if(gyver.x_pos == item.x_pos and gyver.y_pos == item.y_pos and
+                    item.looted is False):
                 gyver.bag += 1
                 item.looted = True
                 self.show_info('You collected the {}'.format(item.name))
@@ -92,9 +93,9 @@ class Display:
         """
         self.window.fill((0, 0, 0), BOT_LEFT)
         pygame.display.update(BOT_LEFT)
-        if (mapping.is_path_available(gyver.y, gyver.x) and
+        if (mapping.is_path_available(gyver.y_pos, gyver.x_pos) and
                 (old_y != gyver.y_pos or old_x != gyver.x_pos)):
-            mapping.move_character(old_y, old_x, gyver.y, gyver.x)
+            mapping.move_character(old_y, old_x, gyver.y_pos, gyver.x_pos)
             self._loot_item(gyver, items)
             self.show_looted_items(items)
             self.window.blit(gyver.pygame_img,
