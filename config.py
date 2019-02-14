@@ -1,5 +1,6 @@
+"""Pygame module is needed to load image, en create pygame obj"""
 import pygame
-
+#pylint: disable=E1101
 pygame.init()
 
 TILE_SIZE = 40
