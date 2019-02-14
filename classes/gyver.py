@@ -1,3 +1,4 @@
+"""Import Character class to extends it"""
 from classes.characters import Character
 
 class MacGyver(Character):

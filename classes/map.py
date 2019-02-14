@@ -1,4 +1,6 @@
+"""import os module to get map elements' file and const IMG_PATH"""
 import os
+from config import DATA_PATH
 
 class Map:
     """Class to contain the map, ' ' is a road, '#' is a wall,
@@ -11,12 +13,14 @@ class Map:
     def is_path_available(self, y_pos, x_pos):
         """ Check if the destination is available """
         if 15 > y_pos >= 0 and 0 <= x_pos < 15:
-            return True if self.map[y_pos][x_pos] in [' ', 'G', 'X', 'W'] else False
+            return self.map[y_pos][x_pos] in [' ', 'G', 'X', 'W']
+        return False
 
     def is_tile_empty(self, y_pos, x_pos):
         """ Check if the tile is empty """
         if 15 > y_pos >= 0 and 0 <= x_pos < 15:
-            return True if self.map[y_pos][x_pos] == ' ' else False
+            return self.map[y_pos][x_pos] == ' '
+        return False
 
     def set_character(self, y_pos, x_pos):
         """place the hero into the labyrinth"""
@@ -38,8 +42,8 @@ class Map:
     def create_map(self, data_file):
         """create the labyrinth from a txt file"""
         mapping = []
-        directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        path_to_file = os.path.join(directory, "ressource", "data", data_file)
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        path_to_file = os.path.join(root, DATA_PATH, data_file)
         with open(path_to_file, 'r') as file:
             lines = file.readlines()
             list_array = [x.strip('\n') for x in lines]

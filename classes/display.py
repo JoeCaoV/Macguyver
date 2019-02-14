@@ -1,5 +1,9 @@
+"""import pygame to disply every elements
+get every needed constants
+"""
+
 import pygame
-from config import *
+from config import FONT, BIG_FONT, BOT_RIGHT, BOT_LEFT, TILE_SIZE, FLOOR, WALL
 
 class Display:
     """This class, contains every action that must output or modify the display

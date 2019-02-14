@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # coding: utf-8
+"""import Pygame module to display the game
+Then all the classes needed and the required constants
+"""
 import pygame
 from classes.characters import Character
 from classes.display import Display
@@ -8,6 +11,7 @@ from classes.items import Item
 from classes.gyver import MacGyver
 from config import BOT_LEFT, BOT_RIGHT
 
+#pylint: disable=E1101
 class Main():
     """Class that will run the game using all the other ones"""
 
@@ -29,18 +33,12 @@ class Main():
         gyver = MacGyver(14, 0, "macgyver.png", mapping)
         display.set_characters(gyver, bad_guy)
 
-        #Setting the items
-        tube = Item('tube', 'tube.png', mapping)
-        ether = Item('ether', 'ether.png', mapping)
-        needle = Item('needle', 'needle.png', mapping)
-        items = [tube, ether, needle]
-        display.set_items(items)
-
         pygame.display.flip()
 
-        self._start_game(mapping, gyver, bad_guy, items, display)
+        self._start_game(mapping, gyver, bad_guy, display)
 
-    def _check_encounter(self, gyver, bad_guy, display):
+    @staticmethod
+    def check_encounter(gyver, bad_guy, display):
         """check if MacGyver meets the Guardian,
         if he does, check if all items have been collected,
         you win if they are, you lose otherwise"""
@@ -53,11 +51,23 @@ class Main():
             return True
         return None
 
-    def _start_game(self, mapping, gyver, bad_guy, items, display):
+    @staticmethod
+    def set_items(mapping, display):  #pylint: disable=W0613
+        """Setting the items"""
+        tube = Item('tube', 'tube.png', mapping)
+        ether = Item('ether', 'ether.png', mapping)
+        needle = Item('needle', 'needle.png', mapping)
+        items = [tube, ether, needle]
+        display.set_items(items)
+        pygame.display.flip()
+        return items
+
+    def _start_game(self, mapping, gyver, bad_guy, display):
         """Once the elements of the game are set by set_game(),
         this function will loop an input asking direction
         until the game is over
         """
+        items = self.set_items(mapping, display)
         message = 'You collected 0/3 items'
         display.show_message(message, BOT_RIGHT)
         message = 'Collect all items to defeat the guardian'
@@ -80,7 +90,7 @@ class Main():
                         gyver.moving('left')
 
                     display.move_character(mapping, gyver, items, old_position)
-                    game_over = self._check_encounter(gyver, bad_guy, display)
+                    game_over = self.check_encounter(gyver, bad_guy, display)
 
 
 if __name__ == "__main__":

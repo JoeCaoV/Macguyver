@@ -1,8 +1,12 @@
+"""import module te randomize items position,
+import os to access item image's file
+import pygame to load image, then constant
+"""
 import random
 import os
 import pygame.image
 from config import IMG_PATH
-
+#pylint: disable=R0903
 class Item():
     """This class create a item, and generate randomly his position."""
 

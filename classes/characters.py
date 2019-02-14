@@ -1,7 +1,9 @@
+"""import os to reach the image file, pygame to load it and constant"""
 import os
 import pygame.image
 from config import IMG_PATH
 
+#pylint: disable=R0903
 class Character:
     """this class alone while set the guardian, but will be extended
     to create the MacGyver class"""
@@ -15,5 +17,5 @@ class Character:
         self.set_onmap(mapping)
 
     def set_onmap(self, mapping):
-        #set the guardian on the map
+        """set the guardian on the map"""
         mapping.set_bad_guy(self.y_pos, self.x_pos)
